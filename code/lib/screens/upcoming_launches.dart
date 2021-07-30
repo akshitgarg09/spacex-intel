@@ -5,7 +5,7 @@ import 'package:spacex_api/spacex_api.dart';
 import '../providers/ships.dart';
 import '../providers/launches.dart';
 import 'package:code/utils/photos.dart';
-import 'package:code/widgets/header_swiper.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 class LaunchScreen extends StatefulWidget {
   const LaunchScreen({Key? key}) : super(key: key);
@@ -33,6 +33,28 @@ class _LaunchScreenState extends State<LaunchScreen> {
     final launchData = Provider.of<Launches>(context, listen: false).items;
     return SingleChildScrollView(
       child: Column(children: [
+        Container(
+          height: 300,
+          child: Swiper(
+            itemCount: SpaceXPhotos.upcoming.length,
+            itemBuilder: (context, i) {
+              return Container(
+                child: ClipRRect(
+                    child: Image.network(
+                  SpaceXPhotos.upcoming[i],
+                  fit: BoxFit.cover,
+                )),
+              );
+            },
+            curve: Curves.easeInOutCubic,
+            autoplay: true,
+            autoplayDelay: 5000,
+            duration: 850,
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
         ListView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
